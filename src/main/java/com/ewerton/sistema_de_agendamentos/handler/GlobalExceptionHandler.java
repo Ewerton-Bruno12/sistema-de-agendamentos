@@ -1,9 +1,6 @@
 package com.ewerton.sistema_de_agendamentos.handler;
 
-import com.ewerton.sistema_de_agendamentos.exception.EmailAlreadyExistsException;
-import com.ewerton.sistema_de_agendamentos.exception.ResourceNotFoundException;
-import com.ewerton.sistema_de_agendamentos.exception.ServiceNameAlreadyExistsException;
-import com.ewerton.sistema_de_agendamentos.exception.TimeSlotUnavailableException;
+import com.ewerton.sistema_de_agendamentos.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.validation.FieldError;
@@ -61,6 +58,18 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         problemDetail.setTitle("Conflito de Agenda");
+        problemDetail.setProperty("timestamp", Instant.now());
+
+        return problemDetail;
+    }
+
+    @ExceptionHandler(InvalidAppointmentStateException.class)
+    public ProblemDetail handleInvalidAppointmentState(InvalidAppointmentStateException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage()
+        );
+        problemDetail.setTitle("Estado Inválido do Agendamento");
         problemDetail.setProperty("timestamp", Instant.now());
 
         return problemDetail;
