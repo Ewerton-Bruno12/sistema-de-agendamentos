@@ -67,17 +67,17 @@ public class ClientService {
         existingClient.setEmail(clientRequestDto.email());
         existingClient.setPhone(clientRequestDto.phone());
 
-        ClientEntity updatedClient = clientRepository.save(existingClient);
-        return toDto(updatedClient);
+        return toDto(existingClient);
     }
 
     @Transactional
     public void delete(Long id) {
-        ClientEntity clientEntity = clientRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Cliente com o ID " + id + " não foi encontrado"));
+        if (!clientRepository.existsById(id)) {
+            throw new ResourceNotFoundException(
+                    "Cliente com o ID " + id + " não foi encontrado");
+        }
 
-        clientRepository.delete(clientEntity);
+        clientRepository.deleteById(id);
     }
 
     private ClientResponseDto toDto(ClientEntity clientEntity) {
