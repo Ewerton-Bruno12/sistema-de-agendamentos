@@ -34,7 +34,7 @@ public class ServiceController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ServiceResponseDto findById(@PathVariable Long id) {
-        return serviceService.findById(id);git
+        return serviceService.findById(id);
     }
 
     @PutMapping("/{id}")
