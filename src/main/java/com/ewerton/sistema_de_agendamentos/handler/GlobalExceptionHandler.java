@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TimeSlotUnavailableException.class)
     public ProblemDetail handleTimeSlotUnavailable(TimeSlotUnavailableException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-                HttpStatus.BAD_REQUEST,
+                HttpStatus.CONFLICT,
                 ex.getMessage()
         );
         problemDetail.setTitle("Conflito de Agenda");
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidAppointmentStateException.class)
     public ProblemDetail handleInvalidAppointmentState(InvalidAppointmentStateException ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-                HttpStatus.BAD_REQUEST,
+                HttpStatus.CONFLICT,
                 ex.getMessage()
         );
         problemDetail.setTitle("Estado Inválido do Agendamento");
